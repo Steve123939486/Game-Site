@@ -1,4 +1,5 @@
 How to use.
+
 Step 1.) Go to site.
 
 Step 2.) Click the company logo in the top left corner twice.
