@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit a game score for review.">
+  <title>Submit a Score</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 20px 48px; background: #111; color: #fff; font: 16px/1.5 Arial, sans-serif; }
+    main { max-width: 760px; margin: 0 auto; }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 28px; }
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      min-height: 44px;
+      padding: 14px 22px;
+      border: 1px solid #fff;
+      border-radius: 7px;
+      background: #fff;
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      text-decoration: none;
+    }
+    nav a:hover { background: #000; color: #fff; }
+    nav a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    .intro { margin: 0 0 20px; }
+    .form-card { padding: 18px; border: 1px solid #333; border-radius: 8px; background: #1e1e1e; }
+    .form-card p:first-child { margin-top: 0; }
+    .score-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    label { display: block; margin-bottom: 6px; font-weight: 700; }
+    .score-field input, .score-field select { width: 100%; padding: 11px 12px; border: 1px solid #444; border-radius: 6px; background: #111; color: #fff; font: inherit; }
+    input:focus, select:focus, button:focus-visible, a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .score-submit-button { margin-top: 16px; padding: 11px 18px; border: 1px solid #fff; border-radius: 7px; background: #fff; color: #000; font: inherit; font-weight: 700; cursor: pointer; }
+    .score-submit-button:hover { background: #000; color: #fff; }
+    .score-submit-button:disabled { opacity: .65; cursor: wait; }
+    #submit-status { min-height: 1.5em; margin-bottom: 0; }
+    .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    small { display: block; margin-top: 6px; color: #ccc; }
+    @media (max-width: 500px) { body { padding: 18px 12px 32px; } .score-form-grid { grid-template-columns: 1fr; } }
+  </style>
+  <script type="module" src="submit-score.js"></script>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main navigation">
+      <a href="index.html">&larr; Employee Information</a>
+      <a href="leaderboard.html">Game Leaderboards</a>
+    </nav>
+    <h1>Submit a Score</h1>
+    <p class="intro">Send your score for review. Approved scores are added to the leaderboard.</p>
+    <section class="form-card" aria-labelledby="submission-title">
+      <h2 id="submission-title">Your submission</h2>
+      <p>Share a nickname, score, and screenshot proof. Proof of your score must be shown to me before it can be added to the leaderboard.</p>
+      <form id="score-form">
+        <div class="score-form-grid">
+          <div class="score-field"><label for="submit-name">Name or nickname</label><input id="submit-name" name="name" type="text" maxlength="32" autocomplete="nickname" required placeholder="Your name"></div>
+          <div class="score-field"><label for="submit-game">Game</label><select id="submit-game" name="game" required><option value="" selected disabled>Choose a game</option></select></div>
+          <div class="score-field"><label for="submit-score">Score</label><input id="submit-score" name="score" type="number" min="0" max="1000000000" step="1" inputmode="numeric" required placeholder="Your score"></div>
+          <div class="score-field"><label for="submit-image">Screenshot proof</label><input id="submit-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required aria-describedby="image-help"><small id="image-help">PNG, JPG, or WebP. Maximum file size: 5 MB. Uploads pause when the 8 GB storage limit is reached.</small></div>
+        </div>
+        <div class="honeypot" aria-hidden="true"><label for="submit-website">Leave this field empty</label><input id="submit-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button class="score-submit-button" type="submit">Send score</button>
+        <p id="submit-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Search games or player names and view leaderboard scores.">
+  <title>Game Leaderboards</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 20px 48px; background: #111; color: #fff; font: 16px/1.5 Arial, sans-serif; }
+    main { max-width: 1000px; margin: 0 auto; }
+    nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 28px; }
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      min-height: 44px;
+      padding: 14px 22px;
+      border: 1px solid #fff;
+      border-radius: 7px;
+      background: #fff;
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      text-decoration: none;
+    }
+    nav a:hover { background: #000; color: #fff; }
+    nav a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    .intro { margin: 0 0 20px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; }
+    input { width: 100%; max-width: 1000px; padding: 12px 14px; border: 1px solid #333; border-radius: 8px; background: #1e1e1e; color: #fff; font: inherit; }
+    input:focus, button:focus-visible, a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    #search-status { min-height: 1.5em; margin: 10px 0; color: #ddd; }
+    #game-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+    .game-option { min-height: 44px; padding: 10px; border: 1px solid #333; border-radius: 8px; background: #1e1e1e; color: #fff; font: inherit; cursor: pointer; transition: background .15s ease; }
+    .game-option:hover, .game-option[aria-current="true"] { background: #333; border-color: #666; }
+    #leaderboard, #player-results { margin-top: 28px; }
+
+    #leaderboard h2 { margin-bottom: 12px; }
+    #player-results h2 { margin-bottom: 12px; }
+    .empty-state, table { padding: 14px; border: 1px solid #333; border-radius: 8px; background: #1e1e1e; }
+    table { width: 100%; padding: 0; border-collapse: collapse; text-align: left; overflow: hidden; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #383838; }
+    th { background: #292929; }
+    tbody tr:last-child td { border-bottom: 0; }
+    @media (max-width: 500px) { body { padding: 18px 12px 32px; } #game-results { grid-template-columns: 1fr; } }
+  </style>
+  <script type="module" src="leaderboard.js"></script>
+</head>
+<body>
+  <main>
+    <nav aria-label="Main navigation">
+      <a href="index.html">&larr; Employee Information</a>
+      <a class="score-submit" href="submit-score.html">Submit a score</a>
+    </nav>
+    <h1>Game Leaderboards</h1>
+    <p class="intro">Search for a game to view its leaderboard, or search by player name to find their scores. Approved scores refresh automatically.</p>
+    <p id="leaderboard-load-status" role="status" aria-live="polite">Loading approved scores from D1...</p>
+    <button id="leaderboard-retry" class="game-option" type="button" hidden>Retry loading scores</button>
+    <label for="game-search">Game name</label>
+    <input id="game-search" type="search" autocomplete="off" placeholder="Start typing a game name...">
+    <p id="search-status" role="status" aria-live="polite">Search for a game to see matching games.</p>
+    <div id="game-results" aria-label="Matching games"></div>
+    <section id="leaderboard" aria-live="polite" aria-label="Selected game leaderboard"></section>
+    <label for="player-search">Player name</label>
+    <input id="player-search" type="search" autocomplete="off" placeholder="Search approved scores by player name...">
+    <p id="player-search-status" role="status" aria-live="polite">Search by player name to find their scores.</p>
+    <section id="player-results" aria-live="polite" aria-label="Scores matching player name"></section>
+  </main>
+</body>
+</html>
